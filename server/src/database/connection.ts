@@ -26,7 +26,7 @@ export default connection;
     */
 
 
-/**  ENTIDADES DA APLICAÇÃO **/
+/** ENTIDADES DA APLICAÇÃO **/
     /* 
         collect_points (Pontos de coleta) 
         collect_points [
@@ -59,6 +59,4 @@ export default connection;
     */
 
 /** MIGRATIONS - HISTÓRICO DO BANCO DE DADOS **/
-    /* 
-           
-    */
+    
