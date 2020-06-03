@@ -201,3 +201,22 @@
     background: #E1FAEC;
     border: 2px solid #34CB79;
 }
+
+/* Ajustando layout quebrado no mobile */
+@media screen and (max-width: 1150px){
+    #page-create-collect-point header {
+        margin-left: 8%;
+        margin-right: 8%;
+    }
+    
+}
+@media screen and (max-width: 500px){
+    #page-create-collect-point header {
+        flex-direction: column;
+    }
+
+    #page-create-collect-point header a {
+        margin-top: 35px;
+    }
+    
+}
