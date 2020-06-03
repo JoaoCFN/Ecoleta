@@ -218,5 +218,17 @@
     #page-create-collect-point header a {
         margin-top: 35px;
     }
+
+    #page-create-collect-point form .field-group {
+        flex-direction: column;
+    }
+
+    #page-create-collect-point form .field-group .field + .field {
+        margin-left: 0px;
+    }   
+    
+    #page-create-collect-point form .field-group input + input {
+        margin-left: 0px;
+    }
     
 }
