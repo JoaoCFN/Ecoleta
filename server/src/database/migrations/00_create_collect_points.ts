@@ -1,5 +1,7 @@
 import Knex from 'knex';
 
+// MIGRATIONS - HISTÓRICO DO BANCO DE DADOS 
+
 // TABELA DE PONTOS DE COLETA
 export async function up(knex : Knex){
     // CRIAR TABELA

@@ -1,9 +1,13 @@
 import express from 'express';
-import routes from './routes';
+import cors from "cors";
 import path from 'path';
+import routes from './routes';
 
 const app = express();
 
+// CORS - Define na nossa API, quais endereços externos vão ter acesso a nossa aplicação. Quando for para o ar, dentro do cors em app.use, você define um atributo chamado origin. Ele vai receber a url do seu site.
+
+app.use(cors());
 app.use(express.json());
 app.use(routes);
 

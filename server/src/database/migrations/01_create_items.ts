@@ -1,12 +1,14 @@
 import Knex from 'knex';
 
+// MIGRATIONS - HISTÓRICO DO BANCO DE DADOS 
+
 // TABELA DE ITENS PARA COLETA
 export async function up(knex : Knex){
     // CRIAR TABELA
     return knex.schema.createTable("items", table => {
         table.increments('id').primary();
-        table.string('image').notNullable();
         table.string('title').notNullable();
+        table.string('image').notNullable();
     })
 }
 
