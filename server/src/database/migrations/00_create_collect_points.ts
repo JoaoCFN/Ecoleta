@@ -1,10 +1,12 @@
 import Knex from 'knex';
 
+// TABELA DE PONTOS DE COLETA
 export async function up(knex : Knex){
     // CRIAR TABELA
     return knex.schema.createTable("collect_points", table => {
         table.increments('id').primary();
         table.string('image').notNullable();
+        table.string('name').notNullable();
         table.string('email').notNullable();
         table.string('whatsapp').notNullable();
         table.decimal('latitude').notNullable();

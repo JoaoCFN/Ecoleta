@@ -10,7 +10,9 @@ const connection = knex({
     connection: {
         // resolve: une caminhos
         filename: path.resolve(__dirname, 'database.sqlite'),
-    }
+    },
+    // Adiciona suporte a valores padrões no SQLITE
+    useNullAsDefault: true,
 });
 
 export default connection;
