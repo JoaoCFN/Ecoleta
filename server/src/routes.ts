@@ -35,7 +35,10 @@ routes.post("/collect_points", async(request, response) => {
         items,
     } = request.body; 
 
-    await knex("collect_points").insert({
+    // TRX - TRANSACTION: PREVENÇÃO EXISTENTE PARA QUANDO TIVERMOS MAIS UMA QUERY RELACIONADA. ISSO FAZ COM QUE SE A PRIMEIRA FALHAR, A SEGUNDA NÃO EXECUTE
+    const trx = await knex.transaction();
+
+    const insertedIds = await trx("collect_points").insert({
         image: "image-fake",
         name, 
         email,
@@ -45,6 +48,17 @@ routes.post("/collect_points", async(request, response) => {
         city, 
         uf, 
     })
+
+    // RELACIONAMENTO COM A TABELA DE ITEMS
+    const point_id = insertedIds[0];
+    const pointItems = items.map((item_id: number) => {
+        return {
+            item_id,
+            point_id 
+        }
+    })
+
+    await trx("point_items").insert(pointItems);
 
     return response.json({ success : true});
 })
