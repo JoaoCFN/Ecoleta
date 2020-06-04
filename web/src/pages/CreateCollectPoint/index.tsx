@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent} from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory} from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 import { Map, TileLayer, Marker } from "react-leaflet";
 import axios from "axios";
@@ -44,7 +44,9 @@ const CreateCollectPoint = () => {
 	const [selectedCity, setselectedCity] = useState("0");
 	const [selectedPositionMap, setselectedPositionMap] = useState<[number, number]>([0, 0]);
 	const [selectedItems, setselectedItems] = useState<number[]>([]);
-
+	
+	// PERMITE NAVEGAR DE UM COMPONENTE PRA OUTRO SEM TER UM BOTÃO
+	const history = useHistory();
 
 	// CHAMADA PARA BUSCAR OS ITEMS DA NOSSA API 
 	useEffect(() => {
@@ -148,9 +150,11 @@ const CreateCollectPoint = () => {
 		}
 
 		await api.post("collect_points", data);
-		console.log(data);
 
 		alert("Ponto de coleta criado");
+		
+		// MANDA O USUÁRIO PRA HOME
+		history.push("/");
 	}
 
 	return (
