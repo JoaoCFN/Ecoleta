@@ -1,8 +1,9 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent} from 'react';
 import { Link } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 import { Map, TileLayer, Marker } from "react-leaflet";
 import axios from "axios";
+import { LeafletMouseEvent } from "leaflet";
 
 import "./style.css";
 import logo from "../../assets/logo.svg";
@@ -30,7 +31,20 @@ const CreateCollectPoint = () => {
 	const [items, setItems] = useState<Item[]>([]);
 	const [ufs, setUfs] = useState<string[]>([]);
 	const [cities, setCities] = useState<string[]>([]);
+	
+	const [initialPosition, setinitialPosition] = useState<[number, number]>([0, 0]);
+
+	const [formData, setformData] = useState({
+		name: "",
+		email: "",
+		whatsapp: ""
+	});
+
 	const [selectedUf, setselectedUf] = useState("0");
+	const [selectedCity, setselectedCity] = useState("0");
+	const [selectedPositionMap, setselectedPositionMap] = useState<[number, number]>([0, 0]);
+	const [selectedItems, setselectedItems] = useState<number[]>([]);
+
 
 	// CHAMADA PARA BUSCAR OS ITEMS DA NOSSA API 
 	useEffect(() => {
@@ -63,10 +77,80 @@ const CreateCollectPoint = () => {
 
 	}, [selectedUf]);
 
+	// CHAMADA PARA BUSCAR A LOCALIZAÇÃO ATUAL DO USUÁRIO
+	useEffect(() =>{
+		// API DO PRÓPRIO NAVEGADOR
+		// RETORNA A POSIÇÃO INICIAL DO USUÁRIO ASSIM QUE ELE ABRIR A APLICAÇÃO
+		navigator.geolocation.getCurrentPosition(position => {
+			const { latitude, longitude } = position.coords;
+			setinitialPosition([latitude, longitude])
+		})
+	}, []);
+
+
 	// FUNÇÃO QUE VERIFICA QUAL UF O USUÁRIO SELECIONOU
 	function handleSelectUF(event: ChangeEvent<HTMLSelectElement>){
 		const uf = event.target.value;
 		setselectedUf(uf);
+	}
+	// FUNÇÃO QUE VERIFICA QUAL CIDADE O USUÁRIO SELECIONOU
+	function handleSelectCity(event: ChangeEvent<HTMLSelectElement>){
+		const city = event.target.value;
+		setselectedCity(city);
+	}
+	// FUNÇÃO QUE VERIFICA O CLICK DO USUÁRIO NO MAPA
+	function handleMapClick(event: LeafletMouseEvent){
+		setselectedPositionMap([event.latlng.lat, event.latlng.lng])
+	}
+
+	// FUNÇÃO QUE VERIFICA O CLICK DO USUÁRIO NO MAPA
+	function handleInputChange(event: ChangeEvent<HTMLInputElement>){
+		const { name, value } = event.target;
+
+		// USAMOS O SPREAD OPERATOR PARA NÃO PERDER AS INFORMAÇÕES DOS CAMPO ANTERIORES
+		// USAMOS A ESTRATÉGIA DO NAME E DO VALUE PARA SUBSTITUIR APENAS O CAMPO QUE ESTÁ SENDO ALTERADO NO MOMENTO PELO USUÁRIO
+		setformData({ ...formData, [name]: value})
+	}
+
+	// FUNÇÃO QUE VERIFICA O ITEM ESCOLHIDO PELO USUÁRIO PARA SER COLETADO
+	function handleSelectItem(id: number){
+		// FINDINDEX: RETORNA UM NÚMERO ACIMA OU IGUAL A 0, SE O ITEM JÁ ESTIVER NO ARRAY
+		const alrerySelected = selectedItems.findIndex(item => item === id);
+		// SE O ITEM JÁ ESTIVER NO ARRAY ELE BUSCA E FAZ UM NOVO ARRAY SEM O MESMO
+		if(alrerySelected > -1){
+			const filteredItems = selectedItems.filter(item => item !== id);
+			setselectedItems(filteredItems);
+		}	
+		else{
+			setselectedItems([...selectedItems, id]);
+		}
+	}
+
+	// FUNÇÃO QUE ENVIA O FORM
+	async function handleSubmit(event: FormEvent){
+		event.preventDefault();
+
+		const { name, email, whatsapp} = formData;
+		const uf = selectedUf;
+		const city = selectedCity;
+		const [latitude, longitude] = selectedPositionMap;
+		const items = selectedItems
+
+		const data = {
+			name, 
+            email,
+            whatsapp, 
+            latitude,
+            longitude,
+            city, 
+            uf, 
+            items
+		}
+
+		await api.post("collect_points", data);
+		console.log(data);
+
+		alert("Ponto de coleta criado");
 	}
 
 	return (
@@ -80,7 +164,7 @@ const CreateCollectPoint = () => {
 				</Link>
 			</header>
 
-			<form action="">
+			<form action="" onSubmit={handleSubmit}>
 				<h1>Cadastro do <br/> ponto de coleta</h1>
 
 				<fieldset>
@@ -94,6 +178,7 @@ const CreateCollectPoint = () => {
 						type="text"
 						id="name"
 						name="name"
+						onChange={handleInputChange}
 						/>
 					</div>
 
@@ -104,6 +189,7 @@ const CreateCollectPoint = () => {
 								type="email"
 								id="email"
 								name="email"
+								onChange={handleInputChange}
 							/>
 						</div>
 
@@ -113,6 +199,7 @@ const CreateCollectPoint = () => {
 								type="text"
 								id="whatsapp"
 								name="whatsapp"
+								onChange={handleInputChange}
 							/>
 						</div>
 					</div>
@@ -125,33 +212,20 @@ const CreateCollectPoint = () => {
 					</legend>
 
 					{/* O mapa é integrado na aplicação usando a lib leaflet */}
-					<Map center={[-12.2322944, -38.9578752]} zoom={14}>
+					<Map 
+						center={initialPosition} 
+						zoom={14} 
+						onClick={handleMapClick}
+					>
 						<TileLayer
 							attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 						/>
 
-						<Marker position={[-12.2322944, -38.9578752]}/>
+						<Marker position={selectedPositionMap}/>
 					</Map>
 
 					<div className="field-group">
-						<div className="field">
-							<label htmlFor="email">Cidade</label>
-							<select 
-								name="city" 
-								id="city"
-							>
-								<option value="0">
-									Selecione uma cidade
-								</option>
-								{cities.map(city => (
-									<option key={city} value={city}>
-										{city}
-									</option>
-								))}
-							</select>
-						</div>
-
 						<div className="field">
 							<label htmlFor="whatsapp">Estado (UF)</label>
 							<select 
@@ -170,6 +244,25 @@ const CreateCollectPoint = () => {
 								))}
 							</select>
 						</div>
+
+						<div className="field">
+							<label htmlFor="email">Cidade</label>
+							<select 
+								name="city" 
+								id="city"
+								value={selectedCity}
+								onChange={handleSelectCity}
+							>
+								<option value="0">
+									Selecione uma cidade
+								</option>
+								{cities.map(city => (
+									<option key={city} value={city}>
+										{city}
+									</option>
+								))}
+							</select>
+						</div>
 					</div>
 				</fieldset>
 
@@ -181,7 +274,14 @@ const CreateCollectPoint = () => {
 
 					<ul className="items-grid">
 						{items.map(item => (
-							<li key={item.id}>
+							<li 
+								key={item.id} 
+								onClick={() => handleSelectItem(item.id)}
+								className={
+									// VERIFICA SE O ITEM SELECIONADO JÁ ESTÁ NO ARRAY E SE ESTIVER ADICIONA A CLASSE SELECTED A LI
+									selectedItems.includes(item.id) ? "selected": ""
+								}
+							>
 								<img src={item.image_url} 
 									 alt={item.title}
 								/>
