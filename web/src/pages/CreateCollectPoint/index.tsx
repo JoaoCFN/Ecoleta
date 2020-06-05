@@ -150,7 +150,7 @@ const CreateCollectPoint = () => {
             items
 		}
 
-		// await api.post("collect_points", data);
+		await api.post("collect_points", data);
 		Swal.fire({
 			title: "Cadastro concluído!",
 			icon: "success",
