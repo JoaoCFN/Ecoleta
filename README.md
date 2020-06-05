@@ -9,7 +9,7 @@ Projeto desenvolvido durante a Next Level Week da RocketSeat. O Ecoleta é uma a
   ![Print da tela inicial](images/nlw-print-web.png?raw=true "Print do layout web")
   
   ### Cadastro 
-  ![Print da tela inicial](images/nlw-print-web.png?raw=true "Print do layout web")
+  ![Print da tela inicial](images/nlw-print-web-cadastro.png?raw=true "Print do layout web")
 
 ## 👨‍🏫 Instrutor 
 
