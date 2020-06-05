@@ -4,6 +4,7 @@ import { FiArrowLeft } from "react-icons/fi";
 import { Map, TileLayer, Marker } from "react-leaflet";
 import axios from "axios";
 import { LeafletMouseEvent } from "leaflet";
+import Swal from "sweetalert2";
 
 import "./style.css";
 import logo from "../../assets/logo.svg";
@@ -149,12 +150,18 @@ const CreateCollectPoint = () => {
             items
 		}
 
-		await api.post("collect_points", data);
-
-		alert("Ponto de coleta criado");
+		// await api.post("collect_points", data);
+		Swal.fire({
+			title: "Cadastro concluído!",
+			icon: "success",
+			showConfirmButton: false,
+			timer: 3000
+		})
 		
 		// MANDA O USUÁRIO PRA HOME
-		history.push("/");
+		setTimeout(() => {
+			history.push("/")
+		}, 3000)
 	}
 
 	return (

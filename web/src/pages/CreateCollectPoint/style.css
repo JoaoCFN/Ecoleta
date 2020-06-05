@@ -1,3 +1,11 @@
+#message{
+    width: 100%;
+    height: auto;
+    position: absolute;
+    z-index: 99999;
+    background-color: rgba(0, 0, 0, .5);
+}
+
 #page-create-collect-point {
     width: 100%;
     max-width: 1100px;
@@ -201,6 +209,24 @@
 .items-grid li.selected {
     background: #E1FAEC;
     border: 2px solid #34CB79;
+}
+
+/* ALERT DE SUCCESS */
+.swal2-container.swal2-backdrop-show, .swal2-container.swal2-noanimation {
+    background-color: rgba(5, 1, 10, .9);
+}
+.swal2-popup {
+    background: transparent;
+}
+.swal2-title {
+    color: #ffffff;
+}
+.swal2-icon.swal2-success {
+    border-color: #34CB79;
+    color: #34CB79;
+}
+.swal2-icon.swal2-success [class^=swal2-success-line] {
+    background-color: #34CB79;
 }
 
 /* LAYOUT WEB MOBILE */
