@@ -3,48 +3,56 @@ import { Feather as Icon } from "@expo/vector-icons";
 import { View, Image, StyleSheet, Text, ImageBackground } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 
+import { useNavigation } from "@react-navigation/native";
+
 const Home = () => {
-  return (
-    <ImageBackground 
-        source={require("../../assets/home-background.png")} 
-        style={styles.container}
-        imageStyle={{ width: 274, height: 368 }}
-    >
-        <View style={styles.main}>
-            <Image source={require("../../assets/logo.png")}/>
 
-            <Text style={styles.title}>
-                Seu marketplace de coleta de resíduos
-            </Text>
-
-            <Text style={styles.description}>
-                Ajudamos pessoas a encontrarem pontos de coleta de forma eficiente.
-            </Text>
-        </View>
+    const navigation = useNavigation();
 
 
-        <View style={styles.footer}>
-            <RectButton style={styles.button} onPress={() => {}}>
-                <View style={styles.buttonIcon}>
-                    <Text>
-                        <Icon name="arrow-right" color="#FFF" size={24} />
-                    </Text>
-                </View>
+    function handleNavigateToPoint(){
+        navigation.navigate("Points");
+    }
+    return (
+        <ImageBackground 
+            source={require("../../assets/home-background.png")} 
+            style={styles.container}
+            imageStyle={{ width: 274, height: 368 }}
+        >
+            <View style={styles.main}>
+                <Image source={require("../../assets/logo.png")}/>
 
-                <Text style={styles.buttonText}>
-                    Entrar
+                <Text style={styles.title}>
+                    Seu marketplace de coleta de resíduos
                 </Text>
-            </RectButton>
-        </View>
-    </ImageBackground>
-  );
+
+                <Text style={styles.description}>
+                    Ajudamos pessoas a encontrarem pontos de coleta de forma eficiente.
+                </Text>
+            </View>
+
+
+            <View style={styles.footer}>
+                <RectButton style={styles.button} onPress={handleNavigateToPoint}>
+                    <View style={styles.buttonIcon}>
+                        <Text>
+                            <Icon name="arrow-right" color="#FFF" size={24} />
+                        </Text>
+                    </View>
+
+                    <Text style={styles.buttonText}>
+                        Entrar
+                    </Text>
+                </RectButton>
+            </View>
+        </ImageBackground>
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 32,
-        backgroundColor: "#f0f0f5"
     },
 
     main: {
@@ -55,7 +63,7 @@ const styles = StyleSheet.create({
     title: {
         color: '#322153',
         fontSize: 32,
-        fontFamily: 'Ubuntu_700Bold',
+        // fontFamily: 'Ubuntu_700Bold',
         maxWidth: 260,
         marginTop: 64,
     },
@@ -64,7 +72,7 @@ const styles = StyleSheet.create({
         color: '#6C6C80',
         fontSize: 16,
         marginTop: 16,
-        fontFamily: 'Roboto_400Regular',
+        // fontFamily: 'Roboto_400Regular',
         maxWidth: 260,
         lineHeight: 24,
     },
@@ -105,7 +113,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         textAlign: 'center',
         color: '#FFF',
-        fontFamily: 'Roboto_500Medium',
+        // fontFamily: 'Roboto_500Medium',
         fontSize: 16,
     }
 });
