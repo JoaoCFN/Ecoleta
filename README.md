@@ -11,6 +11,15 @@ Projeto desenvolvido durante a Next Level Week da RocketSeat. O Ecoleta é uma a
   ### Cadastro 
   ![Print da tela inicial](images/nlw-print-web-cadastro.png?raw=true "Print do layout web")
 
+
+## ⌨️ Tecnologias
+- React
+- React Native
+- Node JS
+- TypeScript
+- CSS
+- SQLITE 3
+
 ## 👨‍🏫 Instrutor 
 
 Diego Fernandes
