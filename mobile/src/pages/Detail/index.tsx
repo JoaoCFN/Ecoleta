@@ -11,6 +11,8 @@ const Detail = () => {
         navigation.goBack();
     }
 
+   
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
