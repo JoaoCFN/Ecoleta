@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity, Text, ScrollView, Image} from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text, ScrollView, Image, SafeAreaView} from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import Constants from "expo-constants";
@@ -20,7 +20,7 @@ const Points = () => {
     }
 
     return (
-        <>
+        <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
                 <TouchableOpacity onPress={handleNavigateBack}>
                     <Icon 
@@ -153,7 +153,7 @@ const Points = () => {
                     </TouchableOpacity>
                 </ScrollView>
             </View>
-        </>
+        </SafeAreaView>
     );
 }
 
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
 
     title: {
         fontSize: 20,
-        fontFamily: 'Ubuntu_700Bold',
+        // fontFamily: 'Ubuntu_700Bold',
         marginTop: 24,
     },
 
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
         color: '#6C6C80',
         fontSize: 16,
         marginTop: 4,
-        fontFamily: 'Roboto_400Regular',
+        // fontFamily: 'Roboto_400Regular',
     },
 
     mapContainer: {
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
 
     mapMarkerTitle: {
         flex: 1,
-        fontFamily: 'Roboto_400Regular',
+        // fontFamily: 'Roboto_400Regular',
         color: '#FFF',
         fontSize: 13,
         lineHeight: 23,
