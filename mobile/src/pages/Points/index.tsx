@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Text, ScrollView, Image, SafeAreaView, Alert} from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import Constants from "expo-constants";
 import MapView, { Marker } from "react-native-maps";
 import { SvgUri } from "react-native-svg";
@@ -21,6 +21,10 @@ interface Point{
     latitude: number,
     longitude: number,
 }
+interface Params{
+    uf: string,
+    city: string
+}
 
 
 const Points = () => {
@@ -30,6 +34,9 @@ const Points = () => {
     const [points, setpoints] = useState<Point[]>([]);
 
     const navigation = useNavigation();
+    const route = useRoute();
+
+    const routeParams = route.params as Params;
 
     // FUNÇÃO QUE VERIFICA O ITEM ESCOLHIDO PELO USUÁRIO PARA SER COLETADO
 	function handleSelectItem(id: number){
@@ -88,16 +95,14 @@ const Points = () => {
     useEffect(() => {
         api.get("collect_points", {
             params:{
-                city: "Feira de Santana",
-                uf: "BA",
-                items: [
-                    1, 2
-                ]
+                city: routeParams.city,
+                uf: routeParams.uf,
+                items: selectedItems
             }
         }).then(reponse => {
             setpoints(reponse.data)
         })
-    }, []);
+    }, [selectedItems]);
 
 
     return (
