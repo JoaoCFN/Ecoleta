@@ -13,7 +13,7 @@ class ItemsPointController {
                 id: item.id,
                 title: item.title,
                 // Neste caso, a ideia é retornar a url da imagem com o endereço da aplicação na frente para facilitar o manipulação do front-end 
-                image_url: `http://localhost:3333/uploads/${item.image}`,
+                image_url: `http://192.168.15.12:3333/uploads/${item.image}`,
             };
         });
     
