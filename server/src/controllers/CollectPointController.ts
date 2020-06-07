@@ -28,7 +28,15 @@ class CollectPointController {
         .distinct()
         .select("collect_points.*");
 
-        return reponse.json(points);
+        const serializedPoints = points.map(point => {
+            return {
+                ...point,
+                // Neste caso, a ideia é retornar a url da imagem com o endereço da aplicação na frente para facilitar o manipulação do front-end 
+                image_url: `http://192.168.15.12:3333/uploads/${point.image}`,
+            };
+        });
+
+        return reponse.json(serializedPoints);
     }
 
     async show(request: Request, response: Response) {
@@ -42,12 +50,19 @@ class CollectPointController {
             );
         }
 
+        const serializedPoint = {
+            ...point,
+            // Neste caso, a ideia é retornar a url da imagem com o endereço da aplicação na frente para facilitar o manipulação do front-end 
+            image_url: `http://192.168.15.12:3333/uploads/${point.image}`,
+        
+        };
+
         const items = await knex("items")
         .join("point_items", "items.id", "=", "point_items.item_id")
         .where("point_items.point_id", id)
         .select("items.title");
 
-        return response.json({point, items});
+        return response.json({point: serializedPoint, items});
 
     }
 
@@ -67,7 +82,7 @@ class CollectPointController {
         const trx = await knex.transaction();
 
         const point = {
-            image: "https://images.unsplash.com/photo-1556767576-5ec41e3239ea?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+            image: request.file.filename,
             name, 
             email,
             whatsapp, 
@@ -81,7 +96,10 @@ class CollectPointController {
     
         // RELACIONAMENTO COM A TABELA DE ITEMS
         const point_id = insertedIds[0];
-        const pointItems = items.map((item_id: number) => {
+        const pointItems = items
+            .split(",")
+            .map((item: string) => Number(item.trim()))
+            .map((item_id: number) => {
             return {
                 item_id,
                 point_id 
