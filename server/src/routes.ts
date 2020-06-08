@@ -29,6 +29,7 @@
 import express from 'express';
 import multer from "multer";
 import multerConfig from "./config/multer";
+import { celebrate, Joi } from "celebrate";
 
 import CollectPointsController from "../src/controllers/CollectPointController";
 import ItemsController from "../src/controllers/ItemsController";
@@ -44,7 +45,26 @@ const itemsController = new ItemsController();
 // Lista de itens
 routes.get("/items", itemsController.index); 
 // Criar pontos de coleta
-routes.post("/collect_points", upload.single("image") , collectPointsController.create);
+routes.post(
+    "/collect_points", 
+    upload.single("image"),  
+    celebrate({
+        body: Joi.object().keys({
+            name: Joi.string().required(),
+            email: Joi.string().required().email(),
+            whatsapp: Joi.number().required(),
+            latitude: Joi.number().required(),
+            longitude: Joi.number().required(),
+            city: Joi.string().required(),
+            uf: Joi.string().required().max(2),
+            items: Joi.string().required(),
+        }, 
+        )
+    }, {
+        abortEarly: false
+    }),
+    collectPointsController.create
+);
 // Listar pontos (filtro por estado/cidade/items)
 routes.get("/collect_points", collectPointsController.index); 
 // Listar um ponto específico de coleta
