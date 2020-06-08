@@ -5,17 +5,56 @@ Projeto desenvolvido durante a Next Level Week da RocketSeat. O Ecoleta é uma a
 
 ## :computer: Web
 
-  ### Home 
+  ### :art: Home 
   ![Print da tela inicial](images/nlw-print-web.png?raw=true "Print do layout web")
   
-  ### Cadastro 
+  ### :art: Cadastro 
   ![Print da tela inicial](images/nlw-print-web-cadastro.png?raw=true "Print do layout web")
   
 ## :iphone: Mobile
 
-  ### Layout 
+  ### :art: Layout 
   ![Print da tela inicial](images/nlw-print-mobile.png?raw=true "Print do layout web")
   
+## 🔥 Como usar
+
+#### :star: Clone o projeto
+
+```
+$ git clone https://github.com/JoaoCFN/Ecoleta.git
+```
+
+## ▶️ Executando
+
+#### :star: Instale as dependências
+```
+$ npm install
+```
+
+#### :star: Crie o banco de dados
+```
+$ cd server
+$ npm run knex:migrate
+$ npm run knex:seed
+```
+
+#### :star: Inicie a API
+```
+$ cd server
+$ npm run dev
+```
+
+#### :star: Inicie a aplicação web
+```
+$ cd web
+$ npm start
+```
+
+#### :star: Inicie a aplicação mobile
+```
+$ cd mobile
+$ npm start
+```
 
 ## ⌨️ Tecnologias
 - React
@@ -27,4 +66,10 @@ Projeto desenvolvido durante a Next Level Week da RocketSeat. O Ecoleta é uma a
 
 ## 👨‍🏫 Instrutor 
 
-Diego Fernandes
+O mestre [Diego Fernandes](https://github.com/diego3g)
+
+## 📝License
+
+This project is under MIT. See at here LICENSE for more informations.
+
+Made by 💜 by [João Neto](https://github.com/JoaoCFN)
