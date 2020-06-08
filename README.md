@@ -10,7 +10,12 @@ Projeto desenvolvido durante a Next Level Week da RocketSeat. O Ecoleta é uma a
   
   ### Cadastro 
   ![Print da tela inicial](images/nlw-print-web-cadastro.png?raw=true "Print do layout web")
+  
+## :iphone: Mobile
 
+  ### Layout 
+  ![Print da tela inicial](images/nlw-print-mobile.png?raw=true "Print do layout web")
+  
 
 ## ⌨️ Tecnologias
 - React
