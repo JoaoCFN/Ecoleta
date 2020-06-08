@@ -74,4 +74,4 @@ O mestre [Diego Fernandes](https://github.com/diego3g)
 
 This project is under MIT. See at here LICENSE for more informations.
 
-Made by 💜 by [João Neto](https://github.com/JoaoCFN)
+**Made by 💜 by [João Neto](https://github.com/JoaoCFN)**
