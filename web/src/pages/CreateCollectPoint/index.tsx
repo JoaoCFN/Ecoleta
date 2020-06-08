@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import "./style.css";
 import logo from "../../assets/logo.svg";
 import api from "../../services/api";
+import Dropzone from "../../components/Dropzone";
 
 const CreateCollectPoint = () => {
 	// SEMPRE QUE CRIAMOS UM ESTADO PARA UM ARRAY OU OBJETO, DEVEMOS INFORMAR MANUALMENTE INFORMAR O TIPO DA VAR
@@ -34,6 +35,8 @@ const CreateCollectPoint = () => {
 	const [cities, setCities] = useState<string[]>([]);
 	
 	const [initialPosition, setinitialPosition] = useState<[number, number]>([0, 0]);
+
+	const [selectedFile, setSelectedFile] = useState<File>();
 
 	const [formData, setformData] = useState({
 		name: "",
@@ -139,15 +142,19 @@ const CreateCollectPoint = () => {
 		const [latitude, longitude] = selectedPositionMap;
 		const items = selectedItems
 
-		const data = {
-			name, 
-            email,
-            whatsapp, 
-            latitude,
-            longitude,
-            city, 
-            uf, 
-            items
+		const data = new FormData();
+
+		data.append("name", name );
+		data.append("email", email);
+		data.append("whatsapp", whatsapp );
+		data.append("latitude", String(latitude));
+		data.append("longitude", String(longitude));
+		data.append("city", city );
+		data.append("uf", uf );
+		data.append("items", items.join(","));
+
+		if(selectedFile){
+			data.append("image", selectedFile);
 		}
 
 		await api.post("collect_points", data);
@@ -177,6 +184,8 @@ const CreateCollectPoint = () => {
 
 			<form action="" onSubmit={handleSubmit}>
 				<h1>Cadastro do <br/> ponto de coleta</h1>
+				
+				<Dropzone onFileUploaded={setSelectedFile}/>
 
 				<fieldset>
 					<legend>
