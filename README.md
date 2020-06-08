@@ -53,7 +53,7 @@ $ npm start
 #### :star: Inicie a aplicação mobile
 ```
 $ cd mobile
-$ npm start
+$ expo start
 ```
 
 ## ⌨️ Tecnologias
