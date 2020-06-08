@@ -60,9 +60,11 @@ $ expo start
 - React
 - React Native
 - Node JS
+- SQLITE 3
+- JavaScript
 - TypeScript
 - CSS
-- SQLITE 3
+
 
 ## 👨‍🏫 Instrutor 
 
